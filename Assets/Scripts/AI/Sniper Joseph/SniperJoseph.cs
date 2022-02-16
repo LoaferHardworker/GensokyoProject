@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +70,7 @@ public class SniperJoseph : MonoBehaviour
 				
 				Vector2 hitDir = hit.point - pos2d;
 
-				if (hit.transform.GetComponent<MortalEntity>() != null)
+				if (hit.transform.GetComponent<MortalEntity>() == null)
 					direction += hitDir * dirFactorWalls(hit.distance);
 				else
 					direction += hitDir * dirFactorOthers(hit.distance);
@@ -122,6 +124,8 @@ public class SniperJoseph : MonoBehaviour
 
 		while (true)
 		{
+			yield return new WaitForSeconds(0.1f);
+
 			if (fighterInput.target == null) continue;
 
 			yield return new WaitForSeconds(
@@ -136,20 +140,18 @@ public class SniperJoseph : MonoBehaviour
 				barriers = Physics2D.RaycastAll(
 						(Vector2)transform.position,
 						fighterInput.target.position - transform.position,
-						vision.Visiblity);
+						Vector2.Distance(fighterInput.target.position, transform.position));
+
+				StopCoroutine(moveCoroutine);
 			}
-
 			catch { continue; }
-
-			StopCoroutine(moveCoroutine);
 
 			if (barriers.Length <= 2) // одно - коллайдер снайпера, второе - цели
 			{
 				yield return new WaitForSeconds(aimTime);
-
 				fighterInput.SetReady();
 			}
-			
+
 			StartCoroutine(moveCoroutine);
 		}
 	}
