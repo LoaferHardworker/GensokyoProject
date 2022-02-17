@@ -18,6 +18,10 @@ public class StrikeToTarget : FighterInput
 
 	public override bool DoAttack()
 	{
+		if (target == null) return false;
+		if (target.gameObject.activeInHierarchy == false) return false;
+
+
 		if (ready)
 		{
 			ready = false;

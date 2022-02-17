@@ -163,8 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c11d3ec567cebad1b6fc73f73cd9a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeTimeToStay: {x: 0.2, y: 1}
+  rangeTimeToStay: {x: 0.1, y: 0.2}
   rangeTimeToMove: {x: 0.2, y: 1}
+  directionError: 19
   distanceFromWalls: 0.13
   distanceFromOthers: 0.453
   DontApproachToWalls: 1

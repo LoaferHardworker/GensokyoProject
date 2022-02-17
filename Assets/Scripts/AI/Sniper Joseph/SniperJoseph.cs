@@ -18,6 +18,7 @@ public class SniperJoseph : MonoBehaviour
 	[Header("Movement settings")]
 	[SerializeField] private Vector2 rangeTimeToStay = new Vector2(0.2f, 1f);
 	[SerializeField] private Vector2 rangeTimeToMove = new Vector2(0.2f, 1f);
+	[SerializeField][Range(0f, 200f)] private float directionError = 30f;
 	[SerializeField][Range(0f, 1f)] private float distanceFromWalls = 0.3f;
 	[SerializeField][Range(0f, 1f)] private float distanceFromOthers = 0.5f;
 	[SerializeField] private bool DontApproachToWalls = true;
@@ -60,8 +61,10 @@ public class SniperJoseph : MonoBehaviour
 
 		while (true)
 		{
-			Vector2 direction = new Vector2();
 			Vector2 pos2d = (Vector2)transform.position;
+			Vector2 direction = new Vector2(
+				UnityEngine.Random.Range(-directionError, directionError),
+				UnityEngine.Random.Range(-directionError, directionError));
 			RaycastHit2D[] hits = vision.LookAround();
 
 			foreach (RaycastHit2D hit in hits)
@@ -70,10 +73,8 @@ public class SniperJoseph : MonoBehaviour
 				
 				Vector2 hitDir = hit.point - pos2d;
 
-				if (hit.transform.GetComponent<MortalEntity>() == null)
-					direction += hitDir * dirFactorWalls(hit.distance);
-				else
-					direction += hitDir * dirFactorOthers(hit.distance);
+				if (hit.transform.GetComponent<MortalEntity>() == null) direction += hitDir * dirFactorWalls(hit.distance);
+				else direction += hitDir * dirFactorOthers(hit.distance);
 			}
 
 			directionMoveInput.direction = direction;
@@ -81,10 +82,11 @@ public class SniperJoseph : MonoBehaviour
 			yield return new WaitForSeconds(
 				UnityEngine.Random.Range(rangeTimeToMove.x, rangeTimeToMove.y));
 
-			// directionMoveInput.direction = Vector2.zero;
 
-			// yield return new WaitForSeconds(
-			// 	UnityEngine.Random.Range(rangeTimeToStay.x, rangeTimeToStay.y));
+			directionMoveInput.direction = Vector2.zero;
+
+			yield return new WaitForSeconds(
+				UnityEngine.Random.Range(rangeTimeToStay.x, rangeTimeToStay.y));
 		}
 	}
 
@@ -103,7 +105,7 @@ public class SniperJoseph : MonoBehaviour
 			{
 				if (hit.transform == null) continue; //не хочу длинных скобок
 				if (hit.transform.GetComponent<MortalEntity>() == null) continue; // по неживим не бьем
-				//if (hit.transform.CompareTag(gameObject.tag)) continue; //по своим не бьем
+				if (hit.transform.CompareTag(gameObject.tag)) continue; //по своим не бьем
 				
 				if (hit.distance > closest.distance)
 					closest = hit;
