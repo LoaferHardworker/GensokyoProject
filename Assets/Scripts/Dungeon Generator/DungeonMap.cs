@@ -53,10 +53,14 @@ public class DungeonMap : ScriptableObject
 				generated++;
 		}
 
-		// foreach(KeyValuePair<Vector2Int, MapElement> el in map.PointMap)
-		// {
-			
-		// }
+		 var toRemove = new List<KeyValuePair<Vector2Int, MapElement>> ();
+
+		foreach(KeyValuePair<Vector2Int, MapElement> el in PointMap)
+			if (el.Value.type == MapElement.Type.Booked)
+				toRemove.Add(el);
+		
+		foreach(KeyValuePair<Vector2Int, MapElement> el in toRemove)
+			PointMap.Remove(el.Key);
 	}
 
 	private bool GenerateBranch(Vector2Int n1, int count)

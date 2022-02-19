@@ -28,6 +28,12 @@ public class MapGenerator : MonoBehaviour
 			newRoom.transform.localScale = new Vector3(1f, 1f, 1f) * map.PointMap[pos].size * 0.8f;
 		}
 
+		else
+		{
+			GameObject newPoint = Instantiate(new GameObject($"{type}"), (Vector2)pos + (Vector2)transform.position, Quaternion.identity, transform);
+			newPoint.transform.localScale = new Vector3(1f, 1f, 1f) * map.PointMap[pos].size * 0.8f;
+		}
+
 		foreach (Vector2Int dir in links)
 		{
 			Debug.DrawRay((Vector2)pos + (Vector2)transform.position, (Vector2)dir, Color.green, float.PositiveInfinity);
