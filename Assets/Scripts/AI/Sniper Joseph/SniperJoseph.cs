@@ -133,26 +133,16 @@ public class SniperJoseph : MonoBehaviour
 			yield return new WaitForSeconds(
 				cooldown * UnityEngine.Random.Range(factorWaitTime.x, factorWaitTime.y));
 
-			RaycastHit2D[] barriers;
-
 			try
 			{
 				directionMoveInput.direction = Vector2.zero;
-
-				barriers = Physics2D.RaycastAll(
-						(Vector2)transform.position,
-						fighterInput.target.position - transform.position,
-						Vector2.Distance(fighterInput.target.position, transform.position));
 
 				StopCoroutine(moveCoroutine);
 			}
 			catch { continue; }
 
-			if (barriers.Length <= 2) // одно - коллайдер снайпера, второе - цели
-			{
-				yield return new WaitForSeconds(aimTime);
-				fighterInput.SetReady();
-			}
+			yield return new WaitForSeconds(aimTime);
+			fighterInput.SetReady();
 
 			StartCoroutine(moveCoroutine);
 		}

@@ -38,7 +38,6 @@ public class DungeonMap : ScriptableObject
 		Vector2Int n1 = Vector2Int.zero;
 
 		PointMap.Add(n1, new MapElement(MapElement.Type.Room));
-
 		GenerateBranch(n1, mainBranchLen);
 
 		var mainBranch = new List<Vector2Int>(PointMap.Keys);
@@ -53,7 +52,7 @@ public class DungeonMap : ScriptableObject
 				generated++;
 		}
 
-		 var toRemove = new List<KeyValuePair<Vector2Int, MapElement>> ();
+		var toRemove = new List<KeyValuePair<Vector2Int, MapElement>> ();
 
 		foreach(KeyValuePair<Vector2Int, MapElement> el in PointMap)
 			if (el.Value.type == MapElement.Type.Booked)
@@ -81,8 +80,10 @@ public class DungeonMap : ScriptableObject
 			if (!IsAveliablePass(n1, dir, size))
 			{
 				if (size > 1)
+				{
+					room3x3Chance += 0.01f;
 					continue;
-
+				}
 				aveliableDirs.Remove(dir);
 				if (aveliableDirs.Count == 0) return false; 
 				continue;

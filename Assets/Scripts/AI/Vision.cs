@@ -13,21 +13,23 @@ public class Vision : MonoBehaviour
 
 	public float Visiblity { get => visiblity; }
 
-	private void Start()
+	private IEnumerator Start()
 	{
 		rayCastDirecions = new Vector2[countOfRays];
 		rayCastStartPoints = new Vector2[countOfRays];
 
-		Vector2 pos2d = (Vector2)transform.position;
+		yield return new WaitForSeconds(0.05f); //чтобы когда мы начали рейкстить, наш трансформ уже был готов
 
 		for (int i = 0; i < countOfRays; i++)
 		{
+			Vector2 pos2d = (Vector2)transform.position;
 			double angle = 2 * Math.PI * i / countOfRays;
 			Vector2 direction = new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
 
 			RaycastHit2D[] reverseHits =
 				Physics2D.RaycastAll(pos2d + direction * visiblity, -direction, visiblity);
 
+			Debug.Log($"reverseHits.Length-1: {reverseHits.Length-1}");
 			rayCastStartPoints[i] = reverseHits[reverseHits.Length-1].point - pos2d + direction * 0.1f;
 			rayCastDirecions[i] = direction;
 		}
