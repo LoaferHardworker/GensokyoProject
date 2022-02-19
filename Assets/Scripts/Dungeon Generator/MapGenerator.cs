@@ -24,7 +24,8 @@ public class MapGenerator : MonoBehaviour
 	{
 		if (type == MapElement.Type.Room)
 		{
-			Instantiate(room, (Vector2)pos + (Vector2)transform.position, Quaternion.identity, transform);
+			GameObject newRoom = Instantiate(room, (Vector2)pos + (Vector2)transform.position, Quaternion.identity, transform);
+			newRoom.transform.localScale = new Vector3(1f, 1f, 1f) * map.PointMap[pos].size * 0.8f;
 		}
 
 		foreach (Vector2Int dir in links)

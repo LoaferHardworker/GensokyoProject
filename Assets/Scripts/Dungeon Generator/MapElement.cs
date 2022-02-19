@@ -4,9 +4,10 @@ using UnityEngine;
 
 public struct MapElement
 {
-	public MapElement(Type type)
+	public MapElement(Type type, int size = 1)
 	{
 		this.type = type;
+		this.size = size;
 
 		links = new HashSet<Vector2Int>();
 	}
@@ -19,6 +20,7 @@ public struct MapElement
 	}
 
 	public Type type;
+	public int size;
 	
 	/// <summary>
 	///	Все переходы в другие комнаты
