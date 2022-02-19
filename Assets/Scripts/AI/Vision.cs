@@ -29,7 +29,6 @@ public class Vision : MonoBehaviour
 			RaycastHit2D[] reverseHits =
 				Physics2D.RaycastAll(pos2d + direction * visiblity, -direction, visiblity);
 
-			Debug.Log($"reverseHits.Length-1: {reverseHits.Length-1}");
 			rayCastStartPoints[i] = reverseHits[reverseHits.Length-1].point - pos2d + direction * 0.1f;
 			rayCastDirecions[i] = direction;
 		}

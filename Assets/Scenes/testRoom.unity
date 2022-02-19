@@ -178,13 +178,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5972563050242727141, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972563050242727141, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972563050242727141, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
+      propertyPath: m_Color.r
+      value: 0.17731361
+      objectReference: {fileID: 0}
     - target: {fileID: 5972563050242727142, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
       propertyPath: m_Name
       value: Joseph
       objectReference: {fileID: 0}
     - target: {fileID: 5972563050242727142, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972563050242727142, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7203148121106418924, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
@@ -354,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5972563050242727142, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
@@ -524,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5972563050242727142, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbe11c7d0caf38f7cae5791614d0ea83, type: 3}
@@ -990,7 +1010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1852812591
 SpriteRenderer:
   m_ObjectHideFlags: 0
