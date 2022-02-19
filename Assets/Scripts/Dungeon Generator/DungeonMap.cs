@@ -75,7 +75,7 @@ public class DungeonMap : ScriptableObject
 				size = 3;
 
 			Vector2Int dir = aveliableDirs[Random.Range(0, aveliableDirs.Count)];
-			Vector2Int n2 = n1+ dir * (PointMap[n1].size / 2) + dir * (1 + size / 2);
+			Vector2Int n2 = n1 + dir * (PointMap[n1].size / 2) + dir * (1 + size / 2);
 
 			if (!IsAveliablePass(n1, dir, size))
 			{
@@ -85,7 +85,20 @@ public class DungeonMap : ScriptableObject
 					continue;
 				}
 				aveliableDirs.Remove(dir);
-				if (aveliableDirs.Count == 0) return false; 
+				
+				if (aveliableDirs.Count == 0)
+				{
+					if (PointMap.ContainsKey(n2) &&
+						(type == MapElement.Type.Corridor && PointMap[n2].type != MapElement.Type.Booked ||
+						PointMap[n2].type == MapElement.Type.Corridor))
+					{
+						PointMap[n1].links.Add(dir);
+						PointMap[n2].links.Add(-dir);
+					}
+
+					return false; 
+				}
+
 				continue;
 			}
 			
@@ -126,16 +139,31 @@ public class DungeonMap : ScriptableObject
 
 	private bool IsAveliablePass(Vector2Int n1, Vector2Int dir, int size)
 	{
-		Vector2Int n2 = n1+ dir * (PointMap[n1].size / 2) + dir * (1 + size / 2);
-		if (PointMap.ContainsKey(n2) || // а вдруг мы не можем в этом месте сделать комнату
-			(PointMap.ContainsKey(new Vector2Int(n2.x, n1.y)) && dir.x != 0 && dir.y != 0) ||
-			(PointMap.ContainsKey(new Vector2Int(n1.x, n2.y)) && dir.x != 0 && dir.y != 0)) //чтоб диагонали не скрещивались
+		Vector2Int n2 = n1 + dir * (PointMap[n1].size / 2) + dir * (1 + size / 2);
+		if (PointMap.ContainsKey(n2) || IsNotPossibleDiagonalPass(n1, dir)) // а вдруг мы не можем в этом месте сделать комнату
 			return false;
 
-		for (int i = -size / 2; i <= size / 2; i++)
-			for (int j = -size / 2; j <= size / 2; j++)
-				if (PointMap.ContainsKey(n2 + new Vector2Int(i, j)))
-					return false;
+		if (size > 1)
+			for (int i = -size / 2; i <= size / 2; i++)
+				for (int j = -size / 2; j <= size / 2; j++)
+					if (PointMap.ContainsKey(n2 + new Vector2Int(i, j)))
+						return false;
+
+		return true;
+	}
+
+	private bool IsNotPossibleDiagonalPass(Vector2Int n1, Vector2Int dir)
+	{
+		if ((dir.x + dir.y) % 2 == 1) 	//dir is collinear to one of the axes 
+			return false;				//so diagonal intersections are impossible
+
+		Vector2Int n2x = n1 + new Vector2Int(dir.x, 0);
+		Vector2Int n2y = n1 + new Vector2Int(0, dir.y);
+
+		if (!PointMap.ContainsKey(n2x)) return false;
+		if (!PointMap.ContainsKey(n2y)) return false;
+
+		
 
 		return true;
 	}

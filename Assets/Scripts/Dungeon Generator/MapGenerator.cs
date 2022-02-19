@@ -10,6 +10,9 @@ public class MapGenerator : MonoBehaviour
 	private IEnumerator Start()
 	{
 		map = Instantiate(map);
+
+		//Random.InitState(43);
+
 		map.Generate();
 
 		foreach(KeyValuePair<Vector2Int, MapElement> el in map.PointMap)
