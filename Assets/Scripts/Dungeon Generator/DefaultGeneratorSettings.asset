@@ -16,5 +16,6 @@ MonoBehaviour:
   otherBranches: 3
   otherBranchesLenRange: {x: 2, y: 4}
   longCorridorChance: 0.249
-  turnChance: 0.5
+  turnChance: 0.796
   room3x3Chance: 0.33
+  loopChance: 0.621

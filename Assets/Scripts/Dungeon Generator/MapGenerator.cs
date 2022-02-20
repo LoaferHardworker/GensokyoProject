@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//класс который пока на 99% нужен для отладки
 public class MapGenerator : MonoBehaviour
 {
 	public DungeonMap map;
@@ -11,17 +12,17 @@ public class MapGenerator : MonoBehaviour
 	{
 		map = Instantiate(map);
 
-		//Random.InitState(43);
+		// На этом сиде будем тестить комнаты 
+		// или на другом, но этот подходит, я его сам методом тыка подобрал)
+		Random.InitState(3737385);
 
 		map.Generate();
 
 		foreach(KeyValuePair<Vector2Int, MapElement> el in map.PointMap)
 		{
 			InstantiateNode(el.Key, el.Value.links, el.Value.type);
-			yield return new WaitForSeconds(0f);
+			yield return 0;
 		}
-
-		Debug.Log("Finished");
 	}
 
 	private void InstantiateNode(Vector2Int pos, HashSet<Vector2Int> links, MapElement.Type type)

@@ -43,21 +43,14 @@ public class DungeonMap : ScriptableObject
 
 		for (int generated = 0, j = 0; generated < otherBranches && j < 500; j++)
 		{
-			n1 = mainBranch[Random.Range(1, mainBranch.Count)];
+			n1 = mainBranch[Random.Range(1, mainBranch.Count)]; // Ignore the start room
 			if (PointMap[n1].type == MapElement.Type.Booked) continue;
 			int countOfRooms = RandomRangeVector(otherBranchesLenRange);
 
 			if (GenerateBranch(n1, countOfRooms)) generated++;
 		}
 
-		var toRemove = new List<KeyValuePair<Vector2Int, MapElement>> ();
-
-		foreach(KeyValuePair<Vector2Int, MapElement> el in PointMap)
-			if (el.Value.type == MapElement.Type.Booked)
-				toRemove.Add(el);
-		
-		foreach(KeyValuePair<Vector2Int, MapElement> el in toRemove)
-			PointMap.Remove(el.Key);
+		ClearBooked();
 	}
 
 	private bool GenerateBranch(Vector2Int n1, int count)
@@ -169,6 +162,18 @@ public class DungeonMap : ScriptableObject
 		PointMap[n2].links.Add(-dir);
 	}
 
-	private RandomRangeVector(Vector2Int vec)
+	private int RandomRangeVector(Vector2Int vec)
 		=> Random.Range(vec.x, vec.y);
+
+	private void ClearBooked()
+	{
+		var toRemove = new List<KeyValuePair<Vector2Int, MapElement>> ();
+
+		foreach(KeyValuePair<Vector2Int, MapElement> el in PointMap)
+			if (el.Value.type == MapElement.Type.Booked)
+				toRemove.Add(el);
+		
+		foreach(KeyValuePair<Vector2Int, MapElement> el in toRemove)
+			PointMap.Remove(el.Key);
+	}
 }
